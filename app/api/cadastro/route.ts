@@ -1,6 +1,6 @@
 // app/api/cadastro/route.ts
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import prisma from '@/lib/prisma';
 
 // 1. LER DADOS
 export async function GET() {
