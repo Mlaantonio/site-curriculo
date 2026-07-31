@@ -217,10 +217,7 @@ useEffect(() => {
           <a href='#' className="logo" onClick={closeMenu}>
               <img src="logo.png" alt="Logo Mario Coldor"/>
           </a>
-          <a href="#" className="nav-logo" onClick={closeMenu}>
-            <Logo/>
-          </a>
-
+            <Logo onClick={closeMenu}/>
           {/* O Botão Hambúrguer */}
           <button 
             className={`menu-toggle ${menuOpen ? 'open' : ''}`} 
