@@ -2,18 +2,21 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="64"
-   height="64"
-   viewBox="0 0 16.933333 16.933333"
+   width="63.999996"
+   height="63.999996"
+   viewBox="0 0 16.933332 16.933332"
    version="1.1"
    id="svg1"
    inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
    sodipodi:docname="logo.svg"
+   inkscape:export-filename="site/site-curriculo/public/logo.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xml:space="preserve"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
      id="namedview1"
      pagecolor="#ffffff"
      bordercolor="#000000"
@@ -32,100 +35,91 @@
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1">
-    <sodipodi:guide
-       position="0.99999998,15.933333"
+     inkscape:current-layer="layer1"><sodipodi:guide
+       position="0.99999998,15.933332"
        orientation="-1,0"
        id="guide1"
        inkscape:locked="false"
        inkscape:label=""
-       inkscape:color="rgb(0,134,229)" />
-    <sodipodi:guide
-       position="16,0.93333331"
+       inkscape:color="rgb(0,134,229)" /><sodipodi:guide
+       position="16,0.9333323"
        orientation="-1,0"
        id="guide2"
        inkscape:locked="false"
        inkscape:label=""
-       inkscape:color="rgb(0,134,229)" />
-    <sodipodi:guide
-       position="16,15.933333"
+       inkscape:color="rgb(0,134,229)" /><sodipodi:guide
+       position="16,15.933332"
        orientation="0,1"
        id="guide3"
        inkscape:locked="false"
        inkscape:label=""
-       inkscape:color="rgb(0,134,229)" />
-    <sodipodi:guide
-       position="0.99999998,0.93333331"
+       inkscape:color="rgb(0,134,229)" /><sodipodi:guide
+       position="0.99999998,0.9333323"
        orientation="0,1"
        id="guide4"
        inkscape:locked="false"
        inkscape:label=""
-       inkscape:color="rgb(0,134,229)" />
-  </sodipodi:namedview>
-  <defs
-     id="defs1" />
-  <g
+       inkscape:color="rgb(0,134,229)" /><inkscape:page
+       x="0"
+       y="0"
+       width="16.933332"
+       height="16.933332"
+       id="page2"
+       margin="0"
+       bleed="0" /></sodipodi:namedview><defs
+     id="defs1" /><g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
-    <rect
-       style="fill:#5757af;fill-opacity:1;stroke:none;stroke-width:0.245209"
+     id="layer1"><rect
+       style="fill:#233d61;fill-opacity:1;stroke:none;stroke-width:0.245209"
        id="rect1"
        width="1.5"
        height="15"
        x="1"
-       y="1" />
-    <rect
-       style="fill:#5757af;fill-opacity:1;stroke:none;stroke-width:0.223844"
+       y="1" /><rect
+       style="fill:#233d61;fill-opacity:1;stroke:none;stroke-width:0.223844"
        id="rect1-3"
        width="1.5"
        height="12.5"
        x="1"
        y="-16"
-       transform="rotate(90)" />
-    <rect
-       style="fill:#5757af;fill-opacity:1;stroke:none;stroke-width:0.155846"
+       transform="rotate(90)" /><rect
+       style="fill:#233d61;fill-opacity:1;stroke:none;stroke-width:0.155846"
        id="rect1-3-8"
        width="1.5037272"
        height="6.0440831"
        x="8.685523"
        y="-12.518918"
-       transform="matrix(0.50593255,0.86257304,-0.86683377,0.49859724,0,0)" />
-    <rect
-       style="fill:#5757af;fill-opacity:1;stroke:none;stroke-width:0.155846"
+       transform="matrix(0.50593255,0.86257304,-0.86683377,0.49859724,0,0)" /><rect
+       style="fill:#233d61;fill-opacity:1;stroke:none;stroke-width:0.155846"
        id="rect1-3-8-6"
        width="1.5037272"
        height="6.0440831"
        x="-0.4725613"
        y="-17.856133"
-       transform="matrix(0.50593255,-0.86257304,-0.86683377,-0.49859724,0,0)" />
-    <rect
-       style="fill:#5757af;fill-opacity:1;stroke:none;stroke-width:0.214704"
+       transform="matrix(0.50593255,-0.86257304,-0.86683377,-0.49859724,0,0)" /><rect
+       style="fill:#233d61;fill-opacity:1;stroke:none;stroke-width:0.214704"
        id="rect1-3-1"
        width="1.5"
        height="11.5"
        x="8"
        y="-16"
-       transform="rotate(90)" />
-    <text
+       transform="rotate(90)" /><text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.83276px;font-family:'DejaVu Sans Mono';-inkscape-font-specification:'DejaVu Sans Mono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;writing-mode:lr-tb;direction:ltr;fill:#5757af;fill-opacity:1;stroke:none;stroke-width:0.402729"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.83276px;font-family:'DejaVu Sans Mono';-inkscape-font-specification:'DejaVu Sans Mono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;writing-mode:lr-tb;direction:ltr;fill:#233d61;fill-opacity:1;stroke:none;stroke-width:0.402729"
        x="4.4289584"
        y="11.628355"
        id="text4"
        transform="scale(0.73104911,1.3678972)"><tspan
          sodipodi:role="line"
          id="tspan4"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.83276px;font-family:'DejaVu Sans Mono';-inkscape-font-specification:'DejaVu Sans Mono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.402729"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.83276px;font-family:'DejaVu Sans Mono';-inkscape-font-specification:'DejaVu Sans Mono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#233d61;fill-opacity:1;stroke-width:0.402729"
          x="4.4289584"
-         y="11.628355">COLDOR</tspan></text>
-    <rect
-       style="fill:#5757af;fill-opacity:1;stroke:none;stroke-width:0.0915873"
+         y="11.628355">COLDOR</tspan></text><rect
+       style="fill:#233d61;fill-opacity:1;stroke:none;stroke-width:0.0915873"
        id="rect4"
        width="1.5"
        height="2.0926085"
        x="8"
        y="-3.8347414"
-       transform="rotate(90)" />
-  </g>
-</svg>
+       transform="rotate(90)" /></g></svg>

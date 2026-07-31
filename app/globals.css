@@ -47,7 +47,7 @@ body {
 .logo {
 width: 60px;
 height: auto;
-margin-right: 15px;
+margin-right: 10px;
 }
 
 .nav-logo {
@@ -77,44 +77,13 @@ margin-right: 15px;
 
 /* Nome Principal */
 .logo-main {
-    font-size: 1.4rem !important;
+    font-size: 1.2rem !important;
     font-weight: 800 !important;
     color: #1a365d !important;         /* Azul escuro corporativo */
+    display: block !important;
     letter-spacing: 0.5px !important;
     text-transform: uppercase !important;
-    display: block !important;
-}
-
-/* Apelido (Subtítulo) */
-.logo-sub {
-    font-size: 0.75rem !important;
-    font-weight: 600 !important;
-    color: #4299e1 !important;         /* Azul claro de destaque */
-    letter-spacing: 4px !important;    /* Efeito de espaçamento moderno */
-    text-transform: uppercase !important;
-    text-align: left;
-    display: block !important;
-}
-
-/* Estilo do Nome Principal */
-.logo-main {
-    font-size: 1.4rem !important;
-    font-weight: 800 !important;
-    color: #1a365d !important;
-    letter-spacing: 0.5px !important;
-    text-transform: uppercase !important;
-    display: block !important;
     white-space: nowrap !important; /* Impede que Antonio vá para baixo de Mario */
-}
-
-/* Estilo do Apelido (Subtítulo) */
-.logo-sub {
-    font-size: 0.90rem;
-    font-weight: 600;
-    color: #2f6ea1; /* O azul claro de destaque para dar contraste */
-    letter-spacing: 4px; /* Espaçamento entre as letras para dar um ar moderno de TI */
-    /* text-transform: uppercase; /* Deixa o nome imponente em maiúsculas */
-    padding-left: 2px; /* Ajuste fino de alinhamento por causa do espaçamento */
 }
 
 /* 1. A Faixa Fixa no Topo */

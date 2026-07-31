@@ -5,7 +5,6 @@ export default function Logo({ onClick }) {
   return (
     <Link href="/" className="nav-logo" onClick={onClick}>
       <span className="logo-main">Mario Antonio</span>
-      <span className="logo-sub">Coldor</span>
     </Link>
   );
 }
