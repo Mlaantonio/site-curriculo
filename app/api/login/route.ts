@@ -5,7 +5,7 @@ export async function POST(request: Request) {
     const { senha } = await request.json();
 
     // Puxa a senha verdadeira do seu arquivo .env
-    const senhaCorreta = process.env.SENHA_ADMIN;
+    const senhaCorreta = process.env.ADMIN_PASS;
 
     if (senha === senhaCorreta) {
       return NextResponse.json({ success: true }, { status: 200 });
