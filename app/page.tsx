@@ -214,9 +214,11 @@ useEffect(() => {
       <header className="navbar-header">
         <nav className="navbar-container">
           {/* Logo */}
+          <a href='#' className="logo" onClick={closeMenu}>
+              <img src="logo.png" alt="Logo Mario Coldor"/>
+          </a>
           <a href="#" className="nav-logo" onClick={closeMenu}>
-            <span className="logo-main">Mario Antonio</span>
-            <span className="logo-sub">Coldor</span>
+            <Logo/>
           </a>
 
           {/* O Botão Hambúrguer */}
