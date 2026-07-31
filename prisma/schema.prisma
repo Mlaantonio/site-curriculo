@@ -1,0 +1,151 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URL")
+}
+
+// ------------------------------------------------------------------
+// ENUMS
+// ------------------------------------------------------------------
+
+enum StatusFormacao {
+  CONCLUIDO
+  CURSANDO
+  INCOMPLETO
+}
+
+enum NivelFluencia {
+  BASICO
+  INTERMEDIARIO
+  AVANCADO
+  FLUENTE
+  NATIVO
+}
+
+// ------------------------------------------------------------------
+// MODELS
+// ------------------------------------------------------------------
+
+model TbCadastro {
+  id                   Int       @id @default(autoincrement())
+  cpf                  String    @unique
+  nome                 String
+  data_nascimento      DateTime
+  qtde_filhos          Int?      @default(0)
+  estado_civil         String?
+  nacionalidade        String?
+  logradouro           String?
+  numero               String?
+  bairro               String?
+  cidade               String?
+  uf                   String?
+  cep                  String?
+  telefone             String?
+  email                String    @unique
+  resumoprofissional   String?   @db.Text
+  objetivoprofissional String?   @db.Text
+
+  // Relacionamentos
+  links                TbRelLinks[]
+  experiencias         TbExperienciaProf[]
+  formacoes            TbFormacao[] // Adicionado por dedução lógica
+  idiomas              TbIdiomas[]  // Adicionado por dedução lógica
+
+  @@map("tbcadastro")
+}
+
+model TbLinks {
+  id     Int          @id @default(autoincrement())
+  nome   String
+  link   String
+
+  // Relacionamentos
+  pessoas TbRelLinks[]
+
+  @@map("tblinks")
+}
+
+model TbRelLinks {
+  id       Int @id @default(autoincrement()) // Opcional no Prisma, mas mantido conforme seu modelo
+  idpessoa Int
+  idlink   Int
+
+  pessoa   TbCadastro @relation(fields: [idpessoa], references: [id], onDelete: Cascade)
+  link     TbLinks    @relation(fields: [idlink], references: [id], onDelete: Cascade)
+
+  // Garante que a mesma pessoa não cadastre o mesmo link exato duas vezes
+  @@unique([idpessoa, idlink]) 
+  @@map("tbrel_links")
+}
+
+model TbExperienciaProf {
+  id             Int       @id @default(autoincrement())
+  idpessoa       Int
+  razaosocial    String
+  cidade         String?
+  uf             String?
+  datainicio     DateTime
+  datafim        DateTime? // Opcional (pode ser o emprego atual)
+  cargo          String
+  descricaocargo String    @db.Text
+
+  pessoa         TbCadastro @relation(fields: [idpessoa], references: [id], onDelete: Cascade)
+
+  @@map("tbexperiencia_prof")
+}
+
+model TbFormacao {
+  id          Int            @id @default(autoincrement())
+  idpessoa    Int            // Adicionado para vincular ao cadastro
+  nomecurso   String
+  instituicao String
+  status      StatusFormacao
+  datainicio  DateTime
+  datafim     DateTime?
+  cidade      String?
+  estado      String?
+
+  pessoa      TbCadastro     @relation(fields: [idpessoa], references: [id], onDelete: Cascade)
+
+  @@map("tbformacao")
+}
+
+model TbHabilidades {
+  id          Int             @id @default(autoincrement())
+  nome        String
+
+  // Relacionamentos
+  ferramentas TbFerramentas[]
+  // Se a habilidade pertencer à pessoa, você precisará de uma relação (Many-to-Many) aqui também
+
+  @@map("tbhabilidades")
+}
+
+model TbFerramentas {
+  id             Int           @id @default(autoincrement())
+  idhabilidade   Int
+  nomeferramenta String
+
+  habilidade     TbHabilidades @relation(fields: [idhabilidade], references: [id], onDelete: Cascade)
+
+  @@map("tbferramentas")
+}
+
+model TbIdiomas {
+  id       Int           @id @default(autoincrement())
+  idpessoa Int           // Adicionado para vincular ao cadastro
+  idioma   String
+  fluencia NivelFluencia
+
+  pessoa   TbCadastro    @relation(fields: [idpessoa], references: [id], onDelete: Cascade)
+
+  @@map("tbidiomas")
+}

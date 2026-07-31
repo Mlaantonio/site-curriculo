@@ -1,0 +1,326 @@
+<!-- Currículo Mario Coldor #mariocoldor -->
+<!-- #russiaisaterroriststate  --> 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=850">
+    <title>Currículo - Mario Luís Alves Antonio</title>
+    <link rel="stylesheet" href="curriculo.css">
+    <style>
+        /* Força o inglês a começar oculto por padrão no primeiro carregamento */
+    .lang-en { display: none; }
+
+    /* Estilos do Seletor de Idioma Flutuante (Não quebra o layout) */
+    .lang-switcher {
+        position: fixed;
+    }
+        /* Estilos do Seletor de Idioma Flutuante (Não quebra o layout) */
+        .lang-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 8px 12px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            z-index: 9999;
+            display: flex;
+            gap: 8px;
+        }
+        .lang-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #718096;
+            transition: all 0.2s ease;
+        }
+        .lang-btn.active {
+            background-color: #ebf8ff;
+            color: #2b6cb0;
+        }
+        
+        /* Oculta o idioma que não está ativo */
+        html[lang="en"] .lang-pt { display: none !important; }
+        html[lang="pt"] .lang-en { display: none !important; }
+
+        /* Regra para ocultar o seletor na hora de gerar o PDF/Imprimir */
+        @media print {
+            .lang-switcher { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Botão Seletor de Idioma -->
+<div class="lang-switcher">
+    <button class="lang-btn active" id="btn-pt" onclick="switchLanguage('pt')">🇧🇷 PT</button>
+    <button class="lang-btn" id="btn-en" onclick="switchLanguage('en')">🇺🇸 EN</button>
+</div>
+
+<div class="resume-container">
+
+    <header>
+        <h1>Mario Luís Alves Antonio</h1>
+    </header>
+
+    <section>
+        <h2 class="lang-pt">Objetivo - <span class="objtex">Desenvolvedor de Software / Analista de Sistemas</span></h2>
+        <h2 class="lang-en">Objective - <span class="objtex">Software Developer / Systems Analyst</span></h2>
+    </section>
+
+    <section>
+        <h2>
+            <span class="lang-pt">Perfil Profissional</span>
+            <span class="lang-en">Professional Summary</span>
+        </h2>
+        <p class="lang-pt">
+            Software engenier in training, systems Analyst full-stack developer (PHP, React, Java). Brings a multidisciplinary perspective as a Textile Engineer (UNESP) with postgraduate degrees in Marketing and HR (UNICAMP). Combines this business foundation with 5 years of experience coordinating projects in industry and commerce, translating corporate needs into efficient technical solutions. Seeking a position in agile software development teams to add immediate technical and strategic value.
+        </p>
+        <p class="lang-en">
+            Engenheiro de software em formação, analista de Sistemas desenvolvedor full-stack (PHP, React, Java). Possui visão multidisciplinar como Engenheiro Têxtil (UNESP) com pós-graduações em Marketing e RH (UNICAMP). Combina essa base de negócios com 5 anos de experiência coordenando projetos na indústria e comércio, traduzindo necessidades corporativas em soluções técnicas eficientes. Busca recolocação em equipes de desenvolvimento ágil de software para agregar valor técnico e estratégico imediato.
+        </p>
+    </section>
+
+    <section>
+        <h2>
+            <span class="lang-pt">Competências</span>
+            <span class="lang-en">Core Skills</span>
+        </h2>
+        <div class="skills-container">
+            <div class="skills-card">
+                <h3 class="lang-pt">Hard Skills (Tecnologias)</h3>
+                <h3 class="lang-en">Hard Skills (Technology)</h3>
+                <ul>
+                    <li class="lang-pt">Backend & Dados: SQL / MySQL, Java, C++, PHP, VBA / Visual Basic</li>
+                    <li class="lang-en">Backend & Data: SQL, PHP, Java, JavaScript, C++, VBA / Visual Basic</li>
+                    
+                    <li class="lang-pt">Frontend: HTML5, CSS3, JavaScript, React.js, Next.js</li>
+                    <li class="lang-en">Frontend: HTML5, CSS3, JavaScript, React.js, Next.js</li>
+                    
+                    <li class="lang-pt">Cloud & Infraestrutura: Google Cloud Platform (GCP)</li>
+                    <li class="lang-en">Cloud & Infrastructure: </li>
+                    
+                    <li class="lang-pt">Banco de Dados: MySQL, Modelagem Relacional, Otimização de Queries</li>
+                    <li class="lang-en">Databases: MySQL, Relational Modeling, Query Optimization</li>
+                    
+                    <li class="lang-pt">Cloud & Infra: Google Cloud Platform (GCP), Infraestrutura e Redes, Hardware</li>
+                    <li class="lang-en">Cloud & Infra: Google Cloud Platform (GCP), Infrastructure & Networks, Hardware</li>
+                </ul>
+            </div>
+            <div class="skills-card">
+                <h3 class="lang-pt">Soft Skills (Habilidades)</h3>
+                <h3 class="lang-en">Soft Skills (Interpersonal)</h3>
+                <ul>
+                    <li class="lang-pt">Resolução de Problemas Complexos (Método PDCA)</li>
+                    <li class="lang-en">Complex Problem-Solving (PDCA Method)</li>
+                    
+                    <li class="lang-pt">Gestão de Projetos e Liderança de Equipes Multidiscinares</li>
+                    <li class="lang-en">Project Management & Multi-disciplinary Team Leadership</li>
+                    
+                    <li class="lang-pt">Adaptabilidade e Aprendizado Autônomo Ágil</li>
+                    <li class="lang-en">Adaptability & Rapid Autonomous Learning</li>
+                    
+                    <li class="lang-pt">Comunicação Assertiva, Negociação e Resolução de Conflitos</li>
+                    <li class="lang-en">Assertive Communication, Negotiation & Conflict Resolution</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>
+            <span class="lang-pt">Formação Acadêmica</span>
+            <span class="lang-en">Education</span>
+        </h2>
+        <div class="edu-entry">
+            <div class="edu-header">
+                <span class="lang-pt">Análise e Desenvolvimento de Sistemas</span>
+                <span class="lang-en">B.S. in Systems Analysis and Development</span>
+                <span class="institution">UniCesumar</span>
+                <span class="date-location">2023 - 2026</span>
+            </div>
+        </div>
+        <div class="edu-entry">
+            <div class="edu-header">
+                <span class="lang-pt">MBA em Gerenciamento de Projetos</span>
+                <span class="lang-en">MBA in Project Management</span>
+                <span class="institution">IBMEC</span>
+                <span class="lang-pt date-location">2018 - Incompleto</span>
+                <span class="lang-en date-location">2018 - Partial</span>
+            </div>
+        </div>
+        <div class="edu-entry">
+            <div class="edu-header">
+                <span class="lang-pt">Especialização em Marketing Organizacional (B2B)</span>
+                <span class="lang-en">Postgraduate Specialization in B2B Organizational Marketing</span>
+                <span class="institution">UNICAMP</span>
+                <span class="date-location">2009 - 2011</span>
+            </div>
+        </div>
+        <div class="edu-entry">
+            <div class="edu-header">
+                <span class="lang-pt">Graduação em Engenharia Têxtil</span>
+                <span class="lang-en">B.S. in Textile Engineering</span>
+                <span class="institution">UNESP</span>
+                <span class="date-location">1994 - 1997</span>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>
+            <span class="lang-pt">Certificações em TI</span>
+            <span class="lang-en">IT Certifications</span>
+        </h2>
+        <ul class="certifications-list">
+            <li>Networking & Security in Google Cloud</li>
+            <li>Implement Load Balancing on Compute Engine (Skill Badge)</li>
+            <li class="lang-pt">Infraestrutura no Google Cloud</li>
+            <li class="lang-en">Infrastructure in Google Cloud</li>
+            <li class="lang-pt">Como configurar um ambiente de desenvolvimento de apps no Google Cloud</li>
+            <li class="lang-en">Configuring a Google Cloud Apps Development Environment</li>
+            <li>Introduction to Data Analytics in Google Cloud (Google Skills)</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>
+            <span class="lang-pt">Experiência Profissional</span>
+            <span class="lang-en">Professional Experience</span>
+        </h2>
+
+        <div class="job-entry">
+            <div class="job-header">
+                <span class="lang-pt job-title">Coordenador de Processos e Sistemas</span>
+                <span class="lang-en job-title">Processes & Systems Coordinator</span>
+                <span class="lang-pt date-location">Abr 2015 — Mar 2020</span>
+                <span class="lang-en date-location">Apr 2015 — Mar 2020</span>
+            </div>
+            <p class="company-name">Legumina Distribuidora</p>
+            <ul class="lang-pt">
+                <li>Atuação no ciclo completo de desenvolvimento, implantação e manutenção do sistema interno de CRM corporativo utilizando Visual Basic (VB) e modelagem de banco de dados relacionais MySQL.</li>
+                <li>Desenvolvimento e estruturação técnica da interface web institucional utilizando padrões modernos de HTML, CSS e otimização de motores de busca (SEO).</li>
+                <li>Colaboração direta na arquitetura e otimização de processos que impulsionaram a eficiência e o faturamento corporativo, que quadruplicou após dois anos de implantação do sistema.</li>
+            </ul>
+            <ul class="lang-en">
+                <li>Managed the full lifecycle development, deployment, and technical maintenance of the internal corporate CRM system utilizing Visual Basic (VB) and MySQL relational database modeling.</li>
+                <li>Engineered and architected the technical structure of the company’s institutional web interface using clean HTML/CSS semantics and search engine optimization (SEO) standards.</li>
+                <li>Collaborated directly on workflow architecture optimizations that drove corporate efficiency, resulting in a 4x revenue growth within two years of system deployment.</li>
+            </ul>
+        </div>
+
+        <div class="job-entry">
+            <div class="job-header">
+                <span class="lang-pt job-title">Gerente de Qualidade e Governança de Dados</span>
+                <span class="lang-en job-title">Quality Assurance & Data Governance Manager</span>
+                <span class="lang-pt date-location">Jul 1995 — Fev 2014</span>
+                <span class="lang-en date-location">Jul 1995 — Feb 2014</span>
+            </div>
+            <p class="company-name">Vicunha Têxtil S/A</p>
+            <ul class="lang-pt">
+                <li>Coordenação de rotinas de supervisão técnica com foco em gerenciamento de bancos de dados estatísticos de controle de qualidade laboratorial e automação de relatórios analíticos.</li>
+                <li>Liderança na implantação, parametrização e homologação de novas tecnologias de monitoramento e controle de processos industriais em múltiplas unidades produtivas.</li>
+                <li>Garantia da padronização documental, auditoria de processos técnicos e conformidade integral com as diretrizes normativas ISO 9000.</li>
+            </ul>
+            <ul class="lang-en">
+                <li>Coordinated technical supervisory routines focusing on the management of statistical quality control databases and automated analytical reporting across laboratory operations.</li>
+                <li>Led the deployment, parameter setting, and validation of new industrial process monitoring technologies across multiple production plants.</li>
+                <li>Ensured strict document standardization, audited technical processes, and maintained full compliance with ISO 9000 regulatory guidelines.</li>
+            </ul>
+        </div>
+
+        <div class="job-entry">
+            <div class="job-header">
+                <span class="lang-pt job-title">Supervisor de Comunicação Digital</span>
+                <span class="lang-en job-title">Digital Communication Supervisor</span>
+                <span class="lang-pt date-location">Set 2014 — Jan 2015</span>
+                <span class="lang-en date-location">Sep 2014 — Jan 2015</span>
+            </div>
+            <p class="company-name">Sangati Berga S/A</p>
+            <ul class="lang-pt">
+                <li>Responsável pela manutenção, gerenciamento de catálogo e atualização técnica das estruturas do portal corporativo através de desenvolvimento web focado em UX e SEO.</li>
+                <li>Supervisão, formatação lógica e revisão técnica de manuais complexos de engenharia de produtos e maquinários industriais de grande porte.</li>
+            </ul>
+            <ul class="lang-en">
+                <li>Responsible for technical maintenance, catalog expansion, and architecture updates of the corporate portal leveraging web development best practices focused on UX and SEO.</li>
+                <li>Supervised, structured, and technically reviewed complex product engineering and heavy industrial machinery blueprints and operation manuals.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <h2>
+            <span class="lang-pt">Idiomas</span>
+            <span class="lang-en">Languages</span>
+        </h2>
+        <ul>
+            <li class="lang-pt"><strong>Inglês:</strong> Avançado / Fluente</li>
+            <li class="lang-en"><strong>English:</strong> Advanced / Fluent</li>
+            <li class="lang-pt"><strong>Espanhol:</strong> Avançado</li>
+            <li class="lang-en"><strong>Spanish:</strong> Advanced</li>
+        </ul>
+    </section>
+
+    <section>
+        <div class="contact-info">
+            Fortaleza - CE, Brazil | (85) 99712-8493 | mlantonio@msn.com <br>
+            <strong>LinkedIn:</strong> linkedin.com/in/mlaantonio | <strong>GitHub:</strong> github.com/Mlaantonio
+        </div>
+    </section>
+
+</div>
+
+<!-- Script Simples para Chaveamento de Idiomas -->
+<script>
+    function switchLanguage(lang) {
+        // Altera o atributo lang na tag html
+        document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
+        
+        // Altera a classe ativa nos botões
+        document.getElementById('btn-pt').classList.toggle('active', lang === 'pt');
+        document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+        // Captura todos os elementos de cada idioma
+        const ptElements = document.querySelectorAll('.lang-pt');
+        const enElements = document.querySelectorAll('.lang-en');
+
+        // Faz o chaveamento real de exibição no display
+        if (lang === 'pt') {
+            ptElements.forEach(el => el.style.display = '');
+            enElements.forEach(el => el.style.display = 'none');
+        } else {
+            ptElements.forEach(el => el.style.display = 'none');
+            
+            // Ajuste fino para manter o comportamento correto de cada tipo de tag
+            enElements.forEach(el => {
+                if (el.tagName === 'SPAN') el.style.display = 'inline';
+                else if (el.tagName === 'LI') el.style.display = 'list-item';
+                else el.style.display = 'block';
+            });
+        }
+    }
+
+    // NOVA FUNÇÃO: Executada automaticamente ao carregar a página
+    window.addEventListener('DOMContentLoaded', () => {
+        // Captura os parâmetros da URL (ex: ?lang=en)
+        const urlParams = new URLSearchParams(window.location.search);
+        const langParam = urlParams.get('lang');
+
+        // Se o parâmetro for 'en', força a inicialização em Inglês
+        if (langParam === 'en') {
+            switchLanguage('en');
+        } else {
+            // Caso contrário (ou se for 'pt'), mantém o Português padrão
+            switchLanguage('pt');
+        }
+    });
+</script>
+
+</body>
+</html>
