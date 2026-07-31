@@ -123,8 +123,20 @@ export function CadastroProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  return (
-    <CadastroContext.Provider value={{ formData, setFormData, experiencias, setExperiencias, loading, mensagem, salvarDados }}>
+return (
+    <CadastroContext.Provider 
+      value={{ 
+        formData, 
+        setFormData, 
+        experiencias, 
+        setExperiencias, 
+        formacoes,       
+        setFormacoes,   
+        loading, 
+        mensagem, 
+        salvarDados 
+      }}
+    >
       {children}
     </CadastroContext.Provider>
   );
