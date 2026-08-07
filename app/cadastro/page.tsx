@@ -6,31 +6,32 @@ import { CadastroProvider, useCadastro } from './context/CadastroContext';
 import FormPrincipal from './components/FormPrincipal';
 import FormExperiencias from './components/FormExperiencias';
 import FormFormacao from './components/FormFormacao';
+import FormHabilidades from './components/FormHabilidades';
 
-// ------------------------------------------------------------------
-// COMPONENTE DO FORMULÁRIO (Mantido exatamente como você fez)
-// ------------------------------------------------------------------
+// Importa o arquivo CSS (ajuste o caminho se necessário)
+import './cadastro.css'; 
+
 function ContainerCadastro() {
   const { loading, mensagem, salvarDados } = useCadastro();
 
-  if (loading) return <div style={{ padding: '20px' }}>Carregando dados do banco...</div>;
+  if (loading) return <div className="loading-text">Carregando dados do banco...</div>;
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px', fontFamily: 'sans-serif' }}>
-      <h2 style={{color: '#194369'}}>Editar Cadastro Profissional</h2>
+    <div className="page-container">
+      <h2 className="page-title">Editar Cadastro Profissional</h2>
       
       {mensagem && (
-        <div style={{ padding: '10px', backgroundColor: '#d4edda', color: '#155724', marginBottom: '15px' }}>
+        <div className="alert-success">
           {mensagem}
         </div>
       )}
 
-      <form onSubmit={salvarDados} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <form onSubmit={salvarDados} className="form-wrapper">
         <FormPrincipal />
         <FormExperiencias />
         <FormFormacao />
-        
-        <button type="submit" style={{ padding: '12px', backgroundColor: '#0056b3', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
+        <FormHabilidades />
+        <button type="submit" className="btn-primary btn-save">
           Salvar Perfil Completo
         </button>
       </form>
@@ -88,23 +89,23 @@ export default function EditarCadastro() {
   // Se não estiver logado, exibe a tela de Login
   if (!autenticado) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#f4f4f9' }}>
-        <form onSubmit={handleLogin} style={{ padding: '30px', background: 'white', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', display: 'flex', flexDirection: 'column', gap: '15px', width: '300px' }}>
+      <div className="login-container">
+        <form onSubmit={handleLogin} className="login-form">
           
-          <h3 style={{ margin: 0, textAlign: 'center', color: '#194369' }}>Acesso Restrito</h3>
+          <h3 className="login-title">Acesso Restrito</h3>
           
-          {erro && <p style={{ color: 'red', margin: 0, fontSize: '14px', textAlign: 'center' }}>{erro}</p>}
+          {erro && <p className="error-message">{erro}</p>}
           
           <input
             type="password"
             placeholder="Digite a senha"
             value={senha}
             onChange={(e) => setSenha(e.target.value)}
-            style={{ padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
+            className="form-input" /* Reaproveitando a classe de input do FormPrincipal! */
             required
           />
           
-          <button type="submit" disabled={loadingLogin} style={{ padding: '10px', backgroundColor: '#0056b3', color: 'white', border: 'none', borderRadius: '4px', cursor: loadingLogin ? 'not-allowed' : 'pointer' }}>
+          <button type="submit" disabled={loadingLogin} className="btn-primary">
             {loadingLogin ? 'Verificando...' : 'Entrar'}
           </button>
 
@@ -116,10 +117,10 @@ export default function EditarCadastro() {
   // Se estiver logado, exibe a página normal de cadastro com o Provider
   return (
     <CadastroProvider>
-      <div style={{ padding: '10px', textAlign: 'right', maxWidth: '800px', margin: '0 auto' }}>
+      <div className="header-actions">
         <button 
           onClick={() => { sessionStorage.removeItem('admin_auth'); setAutenticado(false); }}
-          style={{ padding: '6px 12px', backgroundColor: '#dc3545', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
+          className="btn-danger">
           Sair
         </button>
       </div>

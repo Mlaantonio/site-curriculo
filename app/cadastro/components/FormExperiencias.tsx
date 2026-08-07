@@ -1,13 +1,13 @@
+// app/cadastro/components/FormExperiencias.tsx
 "use client";
 import * as React from 'react';
 import { useState } from 'react';
 import { useCadastro, Experiencia } from '../context/CadastroContext';
+import '../cadastro.css'; // Importando o CSS
 
 export default function FormExperiencias() {
-  // Puxa a lista oficial e a função de atualizar do Contexto Global
   const { experiencias, setExperiencias } = useCadastro();
 
-  // Estados locais apenas para controlar o formulário na tela
   const [mostrandoFormExp, setMostrandoFormExp] = useState(false);
   const [indexEdicao, setIndexEdicao] = useState<number | null>(null);
   const [expAtual, setExpAtual] = useState<Experiencia>({
@@ -38,12 +38,10 @@ export default function FormExperiencias() {
     }
 
     if (indexEdicao !== null) {
-      // Editando uma existente
       const novasExps = [...experiencias];
       novasExps[indexEdicao] = expAtual;
       setExperiencias(novasExps);
     } else {
-      // Adicionando uma nova
       setExperiencias([...experiencias, expAtual]);
     }
     setMostrandoFormExp(false);
@@ -56,15 +54,11 @@ export default function FormExperiencias() {
     }
   };
 
-  // Estilos reaproveitados
-  const inputStyle = { width: '100%', padding: '10px', marginTop: '5px', borderRadius: '4px', border: '1px solid #ccc', boxSizing: 'border-box' as const };
-  const btnActionStyle = { padding: '6px 12px', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '14px' };
-
   return (
-    <div style={{ padding: '15px', border: '1px solid #ccc', borderRadius: '4px', backgroundColor: '#f9f9f9' }}>
+    <div className="form-container">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
-        <h3 style={{ margin: 0, color: '#194369' }}>Experiências Profissionais</h3>
-        <button type="button" onClick={abrirNovaExp} style={{ ...btnActionStyle, backgroundColor: '#0056b3' }}>
+        <h3 className="form-title">Experiências Profissionais</h3>
+        <button type="button" onClick={abrirNovaExp} className="btn-action btn-add">
           + Adicionar
         </button>
       </div>
@@ -72,66 +66,75 @@ export default function FormExperiencias() {
       {experiencias.length === 0 && <p style={{ color: '#666' }}>Nenhuma experiência cadastrada.</p>}
 
       {experiencias.map((exp, index) => (
-        <div key={index} style={{ padding: '10px', border: '1px solid #ddd', borderRadius: '4px', marginBottom: '10px', backgroundColor: '#fff', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div key={index} className="list-item-card list-item-grid">
+          
+          {/* COLUNA ESQUERDA - TEXTOS (Ocupa 3fr = 75%) */}
           <div>
             <strong>{exp.cargo}</strong> na empresa <em>{exp.razaosocial}</em><br/>
             <small style={{ color: '#666' }}>
               {exp.datainicio ? new Date(exp.datainicio).toLocaleDateString('pt-BR') : ''} até {exp.datafim ? new Date(exp.datafim).toLocaleDateString('pt-BR') : 'Atual'}
             </small>
           </div>
-          <div>
-            <button type="button" onClick={() => abrirEdicaoExp(index, exp)} style={{ ...btnActionStyle, marginRight: '5px', backgroundColor: '#ffc107', color: '#000' }}>Editar</button>
-            <button type="button" onClick={() => removerExpDaLista(index)} style={{ ...btnActionStyle, backgroundColor: '#dc3545' }}>Excluir</button>
+          
+          {/* COLUNA DIREITA - BOTÕES (Ocupa 1fr = 25%) */}
+          <div className="list-item-buttons">
+            <button type="button" onClick={() => abrirEdicaoExp(index, exp)} className="btn-action btn-edit">
+              Editar
+            </button>
+            <button type="button" onClick={() => removerExpDaLista(index)} className="btn-action btn-delete">
+              Excluir
+            </button>
           </div>
+          
         </div>
       ))}
 
-      {/* SUB-FORMULÁRIO */}
+      {/* SUB-FORMULÁRIO DE CADASTRO/EDIÇÃO */}
       {mostrandoFormExp && (
-        <div style={{ marginTop: '15px', padding: '15px', border: '1px dashed #0056b3', borderRadius: '4px', backgroundColor: '#fff' }}>
+        <div className="sub-form-container">
           <h4 style={{ margin: '0 0 15px 0' }}>{indexEdicao !== null ? 'Editar Experiência' : 'Nova Experiência'}</h4>
           
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+          <div className="form-row form-row-first grid-cols-even">
             <div>
               <label>Empresa (Razão Social):</label>
-              <input type="text" name="razaosocial" value={expAtual.razaosocial} onChange={handleExpChange} style={inputStyle} />
+              <input type="text" name="razaosocial" value={expAtual.razaosocial} onChange={handleExpChange} className="form-input" />
             </div>
             <div>
               <label>Cargo:</label>
-              <input type="text" name="cargo" value={expAtual.cargo} onChange={handleExpChange} style={inputStyle} />
+              <input type="text" name="cargo" value={expAtual.cargo} onChange={handleExpChange} className="form-input" />
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginTop: '10px' }}>
+          <div className="form-row grid-cols-even">
             <div>
               <label>Data Início:</label>
-              <input type="date" name="datainicio" value={expAtual.datainicio} onChange={handleExpChange} style={inputStyle} />
+              <input type="date" name="datainicio" value={expAtual.datainicio} onChange={handleExpChange} className="form-input" />
             </div>
             <div>
               <label>Data Fim (Deixe em branco se atual):</label>
-              <input type="date" name="datafim" value={expAtual.datafim} onChange={handleExpChange} style={inputStyle} />
+              <input type="date" name="datafim" value={expAtual.datafim} onChange={handleExpChange} className="form-input" />
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '10px', marginTop: '10px' }}>
+          <div className="form-row grid-cols-uneven">
             <div>
               <label>Cidade:</label>
-              <input type="text" name="cidade" value={expAtual.cidade} onChange={handleExpChange} style={inputStyle} />
+              <input type="text" name="cidade" value={expAtual.cidade} onChange={handleExpChange} className="form-input" />
             </div>
             <div>
               <label>UF:</label>
-              <input type="text" name="uf" value={expAtual.uf} onChange={handleExpChange} style={inputStyle} maxLength={2} />
+              <input type="text" name="uf" value={expAtual.uf} onChange={handleExpChange} className="form-input" maxLength={2} />
             </div>
           </div>
 
-          <div style={{ marginTop: '10px' }}>
+          <div className="form-group">
             <label>Descrição das Atividades:</label>
-            <textarea name="descricaocargo" value={expAtual.descricaocargo} onChange={handleExpChange} style={{ ...inputStyle, minHeight: '60px' }} />
+            <textarea name="descricaocargo" value={expAtual.descricaocargo} onChange={handleExpChange} className="form-input textarea-small" />
           </div>
 
-          <div style={{ marginTop: '15px', display: 'flex', gap: '10px' }}>
-            <button type="button" onClick={salvarExpNaLista} style={{ ...btnActionStyle, backgroundColor: '#28a745' }}>Confirmar</button>
-            <button type="button" onClick={() => setMostrandoFormExp(false)} style={{ ...btnActionStyle, backgroundColor: '#6c757d' }}>Cancelar</button>
+          <div className="form-group" style={{ display: 'flex', gap: '10px' }}>
+            <button type="button" onClick={salvarExpNaLista} className="btn-action btn-confirm">Confirmar</button>
+            <button type="button" onClick={() => setMostrandoFormExp(false)} className="btn-action btn-cancel">Cancelar</button>
           </div>
         </div>
       )}

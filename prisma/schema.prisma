@@ -53,10 +53,11 @@ model TbCadastro {
   objetivoprofissional String?   @db.Text
 
   // Relacionamentos
-  links                TbRelLinks[]
+  links                TbLinks[]
   experiencias         TbExperienciaProf[]
-  formacoes            TbFormacao[] // Adicionado por dedução lógica
-  idiomas              TbIdiomas[]  // Adicionado por dedução lógica
+  formacoes            TbFormacao[] 
+  idiomas              TbIdiomas[] 
+  ferramentas          TbFerramentas[]
 
   @@map("tbcadastro")
 }
@@ -65,24 +66,12 @@ model TbLinks {
   id     Int          @id @default(autoincrement())
   nome   String
   link   String
+  idpessoa Int 
 
   // Relacionamentos
-  pessoas TbRelLinks[]
+  pessoas TbCadastro @relation(fields: [idpessoa], references: [id], onDelete: Cascade)
 
   @@map("tblinks")
-}
-
-model TbRelLinks {
-  id       Int @id @default(autoincrement()) // Opcional no Prisma, mas mantido conforme seu modelo
-  idpessoa Int
-  idlink   Int
-
-  pessoa   TbCadastro @relation(fields: [idpessoa], references: [id], onDelete: Cascade)
-  link     TbLinks    @relation(fields: [idlink], references: [id], onDelete: Cascade)
-
-  // Garante que a mesma pessoa não cadastre o mesmo link exato duas vezes
-  @@unique([idpessoa, idlink]) 
-  @@map("tbrel_links")
 }
 
 model TbExperienciaProf {
@@ -107,7 +96,7 @@ model TbFormacao {
   nomecurso   String
   instituicao String
   status      StatusFormacao
-  datainicio  DateTime
+  datainicio  DateTime?
   datafim     DateTime?
   cidade      String?
   estado      String?
@@ -121,9 +110,7 @@ model TbHabilidades {
   id          Int             @id @default(autoincrement())
   nome        String
 
-  // Relacionamentos
-  ferramentas TbFerramentas[]
-  // Se a habilidade pertencer à pessoa, você precisará de uma relação (Many-to-Many) aqui também
+  ferramentas  TbFerramentas[]
 
   @@map("tbhabilidades")
 }
@@ -131,12 +118,15 @@ model TbHabilidades {
 model TbFerramentas {
   id             Int           @id @default(autoincrement())
   idhabilidade   Int
+  idpessoa       Int
   nomeferramenta String
 
   habilidade     TbHabilidades @relation(fields: [idhabilidade], references: [id], onDelete: Cascade)
+  pessoa         TbCadastro   @relation(fields: [idpessoa], references:[id])
 
   @@map("tbferramentas")
 }
+
 
 model TbIdiomas {
   id       Int           @id @default(autoincrement())

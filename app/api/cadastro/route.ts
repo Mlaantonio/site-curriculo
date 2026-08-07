@@ -7,15 +7,18 @@ export async function GET() {
   try {
     const dados = await prisma.tbCadastro.findFirst({
       include: {
-        // Agora usamos o nome exato da relação que está no seu schema
         experiencias: {
           orderBy: { datainicio: 'desc' }
+        },
+        formacoes: {
+          orderBy: { datainicio: 'desc' }
+        }, // <-- Faltava essa vírgula
+        ferramentas: {
+          orderBy: { id: 'desc' }
         }
       }
     });
 
-    // Como o Prisma já traz as experiências dentro do objeto 'dados', 
-    // podemos retornar direto
     return NextResponse.json(dados || {});
   } catch (error) {
     console.error("Erro na API GET:", error);
@@ -28,12 +31,13 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     
-    const { experiencias = [], ...dadosPessoais } = body;
+    // Adicionado ferramentas = [] aqui
+    const { experiencias = [], formacoes = [], ferramentas = [], ...dadosPessoais } = body;
 
     const novoRegistro = await prisma.tbCadastro.create({
       data: {
         ...dadosPessoais,
-        experiencias: { // Nome exato do schema
+        experiencias: { 
           create: experiencias.map((exp: any) => ({
             razaosocial: exp.razaosocial,
             cidade: exp.cidade,
@@ -42,6 +46,21 @@ export async function POST(request: Request) {
             datafim: exp.datafim ? new Date(exp.datafim) : null,
             cargo: exp.cargo,
             descricaocargo: exp.descricaocargo
+          }))
+        },
+        formacoes: {
+          create: formacoes.map((form: any) => ({
+            instituicao: form.instituicao,
+            nomecurso: form.curso || form.nomecurso,
+            status: form.status ? form.status.toUpperCase() : null,
+            datainicio: form.datainicio ? new Date(form.datainicio) : null,
+            datafim: form.datafim ? new Date(form.datafim) : null
+          }))
+        },
+        ferramentas: {
+          create: ferramentas.map((ferramenta: any) => ({
+            idhabilidade: Number(ferramenta.idhabilidade),
+            nomeferramenta: ferramenta.nomeferramenta
           }))
         }
       },
@@ -58,29 +77,35 @@ export async function PUT(request: Request) {
   try {
     const body = await request.json();
     
-    // Separamos o ID, as experiências e o resto dos dados
-    const { id, experiencias = [], ...dadosPessoais } = body;
+    // Separamos o ID, as experiências, formações, ferramentas e o resto dos dados
+    const { experiencias = [], formacoes = [], ferramentas = [], ...dadosPessoais } = body;
 
-    if (!id) {
-      return NextResponse.json({ error: 'ID é obrigatório para atualizar' }, { status: 400 });
-    }
-
+    // 1. Prepara as EXPERIÊNCIAS
     const expsParaAtualizar = experiencias.filter((exp: any) => exp.id);
     const expsParaCriar = experiencias.filter((exp: any) => !exp.id);
     const idsMantidos = expsParaAtualizar.map((exp: any) => exp.id);
+    
+    // 2. Prepara as FORMAÇÕES 
+    const formsParaAtualizar = formacoes.filter((form: any) => form.id);
+    const formsParaCriar = formacoes.filter((form: any) => !form.id);
+    const idsFormsMantidos = formsParaAtualizar.map((form: any) => form.id);
 
+    // 3. Prepara as FERRAMENTAS
+    const ferramentasParaAtualizar = ferramentas.filter((f: any) => f.id);
+    const ferramentasParaCriar = ferramentas.filter((f: any) => !f.id);
+    const idsFerramentasMantidas = ferramentasParaAtualizar.map((f: any) => f.id);
+
+    // 4. Atualiza tudo no Prisma
     const registroAtualizado = await prisma.tbCadastro.update({
-      where: { id: id },
+      where: { id: 1 },
       data: {
         ...dadosPessoais,
         
-        experiencias: { // Nome exato do schema
-          // 1. Deleta do banco o que não está mais na lista
+        // --- BLOCO DE EXPERIÊNCIAS ---
+        experiencias: {
           deleteMany: idsMantidos.length > 0 
             ? { id: { notIn: idsMantidos } } 
             : {}, 
-            
-          // 2. Cria as novas
           create: expsParaCriar.map((exp: any) => ({
             razaosocial: exp.razaosocial,
             cidade: exp.cidade,
@@ -90,8 +115,6 @@ export async function PUT(request: Request) {
             cargo: exp.cargo,
             descricaocargo: exp.descricaocargo
           })),
-          
-          // 3. Atualiza as existentes
           update: expsParaAtualizar.map((exp: any) => ({
             where: { id: exp.id },
             data: {
@@ -104,7 +127,50 @@ export async function PUT(request: Request) {
               descricaocargo: exp.descricaocargo
             }
           }))
+        },
+
+        // --- BLOCO DE FORMAÇÕES ---
+        formacoes: {
+          deleteMany: idsFormsMantidos.length > 0 
+            ? { id: { notIn: idsFormsMantidos } } 
+            : {},
+          create: formsParaCriar.map((form: any) => ({
+            instituicao: form.instituicao,
+            nomecurso: form.curso || form.nomecurso,
+            status: form.status ? form.status.toUpperCase() : null,
+            datainicio: form.datainicio ? new Date(form.datainicio) : null,
+            datafim: form.datafim ? new Date(form.datafim) : null
+          })),
+          update: formsParaAtualizar.map((form: any) => ({
+            where: { id: form.id },
+            data: {
+              instituicao: form.instituicao,
+              nomecurso: form.curso || form.nomecurso,
+              status: form.status ? form.status.toUpperCase() : null,
+              datainicio: form.datainicio ? new Date(form.datainicio) : null,
+              datafim: form.datafim ? new Date(form.datafim) : null
+            }
+          }))
+        }, // <-- Faltava essa vírgula também
+
+        // --- BLOCO DE FERRAMENTAS ---
+        ferramentas: {
+          deleteMany: idsFerramentasMantidas.length > 0 
+            ? { id: { notIn: idsFerramentasMantidas } } 
+            : {},
+          create: ferramentasParaCriar.map((ferramenta: any) => ({
+            idhabilidade: Number(ferramenta.idhabilidade),
+            nomeferramenta: ferramenta.nomeferramenta
+          })),
+          update: ferramentasParaAtualizar.map((ferramenta: any) => ({
+            where: { id: ferramenta.id },
+            data: {
+              idhabilidade: Number(ferramenta.idhabilidade),
+              nomeferramenta: ferramenta.nomeferramenta
+            }
+          }))
         }
+
       },
     });
 

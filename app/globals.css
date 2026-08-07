@@ -534,9 +534,10 @@ footer {
     color: white;
     font-size: 2rem;
     font-weight: bold;
+    text-decoration: none !important;
 }
 
-.tele-title a {
+.whatsapp-header > a {
     text-decoration: none !important;
 }
 

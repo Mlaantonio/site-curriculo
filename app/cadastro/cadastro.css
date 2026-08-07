@@ -1,0 +1,216 @@
+/* app/cadastro/cadastro.css */
+
+/* =========================================
+   ESTILOS DA PÁGINA PRINCIPAL E ESTRUTURA
+   ========================================= */
+
+.page-container {
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: sans-serif;
+}
+
+.page-title {
+  color: #194369;
+}
+
+.alert-success {
+  padding: 10px;
+  background-color: #d4edda;
+  color: #155724;
+  margin-bottom: 15px;
+  border-radius: 4px;
+}
+
+/* Volte o form-wrapper ao normal (1 coluna para empilhar os formulários) */
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Nova classe para dividir os campos do FormPrincipal em duas colunas */
+.main-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-top: 15px;
+}
+
+
+.form-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.loading-text {
+  padding: 20px;
+}
+
+/* =========================================
+   ESTILOS DE BOTÕES E CABEÇALHO
+   ========================================= */
+
+.btn-primary {
+  padding: 12px;
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #004494;
+}
+
+.btn-primary:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.btn-save {
+  width: 200px;
+}
+
+.btn-danger {
+  padding: 6px 12px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: auto;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+.header-actions {
+  padding: 10px;
+  text-align: right;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+/* =========================================
+   ESTILOS DA TELA DE LOGIN
+   ========================================= */
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f9;
+}
+
+.login-form {
+  padding: 30px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 300px;
+}
+
+.login-title {
+  margin: 0;
+  text-align: center;
+  color: #194369;
+}
+
+.error-message {
+  color: red;
+  margin: 0;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* =========================================
+   LISTA DE ITENS (EXPERIÊNCIAS E FORMAÇÕES)
+   ========================================= */
+
+.list-item-card {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  background-color: #fff;
+}
+
+/* Aqui está a mágica dos 75% e 25% */
+.list-item-grid {
+  display: grid;
+  grid-template-columns: 3fr 1fr; /* 3 partes (75%) para texto, 1 parte (25%) para botões */
+  gap: 20px;
+  align-items: center;
+}
+
+.list-item-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end; /* Empurra os botões para o canto direito da coluna deles */
+}
+
+/* Container do formulário interno de adição/edição */
+.sub-form-container {
+  margin-top: 15px;
+  padding: 15px;
+  border: 1px dashed #0056b3;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+/* =========================================
+   BOTÕES DE AÇÃO SECUNDÁRIOS
+   ========================================= */
+
+.btn-action {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+  width: auto;
+}
+
+.btn-action:hover { opacity: 0.8; }
+
+.btn-add { background-color: #0056b3; color: white; }
+.btn-edit { background-color: #ffc107; color: black; }
+.btn-delete { background-color: #dc3545; color: white; }
+.btn-confirm { background-color: #28a745; color: white; }
+.btn-cancel { background-color: #6c757d; color: white; }
+
+.grid-cols-3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+/* Responsividade: No celular, as colunas viram 1 só */
+@media (max-width: 600px) {
+    .grid-cols-even,
+  .grid-cols-uneven,
+  .grid-cols-3 {
+    grid-template-columns: 1fr;
+  }
+  .list-item-grid {
+    grid-template-columns: 1fr;
+  }
+  .list-item-buttons {
+    justify-content: flex-start;
+  }
+    .main-form-grid {
+    grid-template-columns: 1fr;
+  }
+}

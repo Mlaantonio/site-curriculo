@@ -1,7 +1,9 @@
+// app/cadastro/components/FormFormacao.tsx
 "use client";
 import * as React from 'react';
 import { useState } from 'react';
 import { useCadastro, Formacao } from '../context/CadastroContext';
+import '../cadastro.css'; // Importando o CSS
 
 export default function FormFormacao() {
   const { formacoes, setFormacoes } = useCadastro();
@@ -9,7 +11,7 @@ export default function FormFormacao() {
   const [mostrandoFormFor, setMostrandoFormFor] = useState(false);
   const [indexEdicao, setIndexEdicao] = useState<number | null>(null);
   const [forAtual, setForAtual] = useState<Formacao>({
-    instituicao: '', curso: '', situacao: 'Concluído', datainicio: '', datafim: ''
+    instituicao: '', curso: '', status: 'CONCLUIDO', datainicio: '', datafim: ''
   });
 
   const handleForChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -18,7 +20,7 @@ export default function FormFormacao() {
   };
 
   const abrirNovaFor = () => {
-    setForAtual({ instituicao: '', curso: '', situacao: 'Concluído', datainicio: '', datafim: '' });
+    setForAtual({ instituicao: '', curso: '', status: '', datainicio: '', datafim: '' });
     setIndexEdicao(null);
     setMostrandoFormFor(true);
   };
@@ -52,14 +54,11 @@ export default function FormFormacao() {
     }
   };
 
-  const inputStyle = { width: '100%', padding: '10px', marginTop: '5px', borderRadius: '4px', border: '1px solid #ccc', boxSizing: 'border-box' as const };
-  const btnActionStyle = { padding: '6px 12px', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '14px' };
-
   return (
-    <div style={{ padding: '15px', border: '1px solid #ccc', borderRadius: '4px', backgroundColor: '#f9f9f9' }}>
+    <div className="form-container">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
-        <h3 style={{ margin: 0, color: '#194369' }}>Formação Acadêmica</h3>
-        <button type="button" onClick={abrirNovaFor} style={{ ...btnActionStyle, backgroundColor: '#0056b3' }}>
+        <h3 className="form-title">Formação Acadêmica</h3>
+        <button type="button" onClick={abrirNovaFor} className="btn-action btn-add">
           + Adicionar
         </button>
       </div>
@@ -67,57 +66,68 @@ export default function FormFormacao() {
       {(!formacoes || formacoes.length === 0) && <p style={{ color: '#666' }}>Nenhuma formação cadastrada.</p>}
 
       {formacoes?.map((formacao, index) => (
-        <div key={index} style={{ padding: '10px', border: '1px solid #ddd', borderRadius: '4px', marginBottom: '10px', backgroundColor: '#fff', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div key={index} className="list-item-card list-item-grid">
+          
+          {/* COLUNA ESQUERDA - TEXTOS (Ocupa 3fr = 75%) */}
           <div>
-            <strong>{formacao.curso}</strong> na instituição <em>{formacao.instituicao}</em><br/>
+            <strong>{formacao.curso}</strong> - Instituição: <em>{formacao.instituicao}</em><br/>
             <small style={{ color: '#666' }}>
-              Situação: {formacao.situacao} | {formacao.datainicio ? new Date(formacao.datainicio).toLocaleDateString('pt-BR') : ''} até {formacao.datafim ? new Date(formacao.datafim).toLocaleDateString('pt-BR') : 'Atual'}
+              Situação: {formacao.status} | {formacao.datainicio ? new Date(formacao.datainicio).toLocaleDateString('pt-BR') : ''} até {formacao.datafim ? new Date(formacao.datafim).toLocaleDateString('pt-BR') : 'Atual'}
             </small>
           </div>
-          <div>
-            <button type="button" onClick={() => abrirEdicaoFor(index, formacao)} style={{ ...btnActionStyle, marginRight: '5px', backgroundColor: '#ffc107', color: '#000' }}>Editar</button>
-            <button type="button" onClick={() => removerForDaLista(index)} style={{ ...btnActionStyle, backgroundColor: '#dc3545' }}>Excluir</button>
+          
+          {/* COLUNA DIREITA - BOTÕES (Ocupa 1fr = 25%) */}
+          <div className="list-item-buttons">
+            <button type="button" onClick={() => abrirEdicaoFor(index, formacao)} className="btn-action btn-edit">
+              Editar
+            </button>
+            <button type="button" onClick={() => removerForDaLista(index)} className="btn-action btn-delete">
+              Excluir
+            </button>
           </div>
+          
         </div>
       ))}
 
+      {/* SUB-FORMULÁRIO DE CADASTRO/EDIÇÃO */}
       {mostrandoFormFor && (
-        <div style={{ marginTop: '15px', padding: '15px', border: '1px dashed #0056b3', borderRadius: '4px', backgroundColor: '#fff' }}>
+        <div className="sub-form-container">
           <h4 style={{ margin: '0 0 15px 0' }}>{indexEdicao !== null ? 'Editar Formação' : 'Nova Formação'}</h4>
           
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+          <div className="form-row form-row-first grid-cols-even">
             <div>
               <label>Instituição de Ensino:</label>
-              <input type="text" name="instituicao" value={forAtual.instituicao} onChange={handleForChange} style={inputStyle} />
+              <input type="text" name="instituicao" value={forAtual.instituicao} onChange={handleForChange} className="form-input" />
             </div>
             <div>
               <label>Curso:</label>
-              <input type="text" name="curso" value={forAtual.curso} onChange={handleForChange} style={inputStyle} />
+              <input type="text" name="curso" value={forAtual.curso} onChange={handleForChange} className="form-input" />
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px', marginTop: '10px' }}>
+          <div className="form-row grid-cols-3">
             <div>
               <label>Situação:</label>
-              <select name="situacao" value={forAtual.situacao} onChange={handleForChange} style={inputStyle}>
-                <option value="Concluído">Concluído</option>
-                <option value="Cursando">Cursando</option>
-                <option value="Trancado/Incompleto">Trancado/Incompleto</option>
+              {/* O select funciona perfeitamente com a classe form-input */}
+              <select name="status" value={forAtual.status} onChange={handleForChange} className="form-input">
+                <option value="CONCLUIDO">Concluído</option>
+                <option value="CURSANDO">Cursando</option>
+                <option value="INCOMPLETO">Trancado/Incompleto</option>
               </select>
             </div>
             <div>
               <label>Data Início:</label>
-              <input type="date" name="datainicio" value={forAtual.datainicio} onChange={handleForChange} style={inputStyle} />
+              <input type="date" name="datainicio" value={forAtual.datainicio} onChange={handleForChange} className="form-input" />
             </div>
             <div>
               <label>Data Fim:</label>
-              <input type="date" name="datafim" value={forAtual.datafim} onChange={handleForChange} style={inputStyle} />
+              <input type="date" name="datafim" value={forAtual.datafim} onChange={handleForChange} className="form-input" />
             </div>
           </div>
 
-          <div style={{ marginTop: '15px', display: 'flex', gap: '10px' }}>
-            <button type="button" onClick={salvarForNaLista} style={{ ...btnActionStyle, backgroundColor: '#28a745' }}>Confirmar Formação</button>
-            <button type="button" onClick={() => setMostrandoFormFor(false)} style={{ ...btnActionStyle, backgroundColor: '#6c757d' }}>Cancelar</button>
+          <div className="form-group" style={{ display: 'flex', gap: '10px' }}>
+            <button type="button" onClick={salvarForNaLista} className="btn-action btn-confirm">Confirmar Formação</button>
+            <button type="button" onClick={() => setMostrandoFormFor(false)} className="btn-action btn-cancel">Cancelar</button>
           </div>
         </div>
       )}

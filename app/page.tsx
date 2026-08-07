@@ -506,7 +506,7 @@ useEffect(() => {
           <div className="email-card"> 
             <div className='email-header'>
               <a href="mailto:mario.a.coldor@gmail.com" target="_blank" rel="noopener noreferrer">
-                <img src="/logoemail.png" alt="E-mail Logo" style={{ height: '35px', width: 'auto', marginLeft: '0px', marginBottom: '10px' }} />
+                <img src="/logoemail.png" alt="E-mail Logo" style={{ height: '30px', width: 'auto', marginLeft: '0px', marginBottom: '10px' }} />
               </a>
               <div className="button-card">
                 <a href="mailto:mario.a.coldor@gmail.com" target="_blank" rel="noopener noreferrer" style={{fontSize:'small'}}>mario.a.coldor@gmail.com</a>
