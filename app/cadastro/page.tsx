@@ -119,7 +119,11 @@ export default function EditarCadastro() {
     <CadastroProvider>
       <div className="header-actions">
         <button 
-          onClick={() => { sessionStorage.removeItem('admin_auth'); setAutenticado(false); }}
+          onClick={async () => { 
+            await fetch('/api/logout', { method: 'POST' }); // Destrói o cookie no back-end
+            sessionStorage.removeItem('admin_auth');        // Limpa o front-end
+            setAutenticado(false); 
+          }}
           className="btn-danger">
           Sair
         </button>

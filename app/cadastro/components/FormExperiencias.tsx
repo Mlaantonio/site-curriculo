@@ -2,32 +2,52 @@
 "use client";
 import * as React from 'react';
 import { useState } from 'react';
-import { useCadastro, Experiencia } from '../context/CadastroContext';
 import '../cadastro.css'; // Importando o CSS
 
-export default function FormExperiencias() {
-  const { experiencias, setExperiencias } = useCadastro();
+//1. Tipagens definidas
+export interface Experiencia {
+  razaosocial: string;
+  cidade: string;
+  uf: string;
+  datainicio: string;
+  datafim: string;
+  cargo: string;
+  descricaocargo: string;
+}
 
+export default function FormExperiencias() {
+  
+// 2. Estados do componente
+  const [experiencias, setExperiencias] = useState<Experiencia[]>([]);
+  const [expAtual, setExpAtual] = useState<Experiencia>({
+    razaosocial: '',
+    cidade: '',
+    uf: '',
+    datainicio: '',
+    datafim: '',
+    cargo: '',
+    descricaocargo: ''
+  });
   const [mostrandoFormExp, setMostrandoFormExp] = useState(false);
   const [indexEdicao, setIndexEdicao] = useState<number | null>(null);
-  const [expAtual, setExpAtual] = useState<Experiencia>({
-    razaosocial: '', cidade: '', uf: '', datainicio: '', datafim: '', cargo: '', descricaocargo: ''
-  });
-
-  const handleExpChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setExpAtual((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const abrirNovaExp = () => {
-    setExpAtual({ razaosocial: '', cidade: '', uf: '', datainicio: '', datafim: '', cargo: '', descricaocargo: '' });
-    setIndexEdicao(null);
-    setMostrandoFormExp(true);
-  };
-
   const abrirEdicaoExp = (index: number, exp: Experiencia) => {
     setExpAtual(exp);
     setIndexEdicao(index);
+    setMostrandoFormExp(true);
+  };
+
+
+  const abrirNovaExp = () => {
+    setExpAtual({
+      razaosocial: '',
+      cidade: '',
+      uf: '',
+      datainicio: '',
+      datafim: '',
+      cargo: '',
+      descricaocargo: ''
+    });
+    setIndexEdicao(null);
     setMostrandoFormExp(true);
   };
 
@@ -45,6 +65,11 @@ export default function FormExperiencias() {
       setExperiencias([...experiencias, expAtual]);
     }
     setMostrandoFormExp(false);
+  };
+
+  const handleExpChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setExpAtual((prev) => ({ ...prev, [name]: value }));
   };
 
   const removerExpDaLista = (index: number) => {

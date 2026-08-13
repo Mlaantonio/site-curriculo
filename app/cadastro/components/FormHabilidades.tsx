@@ -1,39 +1,67 @@
 // app/cadastro/components/FormHabilidades.tsx
 "use client";
 import * as React from 'react';
-import { useState } from 'react';
-import { useCadastro, Ferramenta } from '../context/CadastroContext';
+import { useState, useEffect } from 'react';
 import '../cadastro.css'; 
 
-export default function FormHabilidades() {
-  // Puxa as ferramentas cadastradas e a lista de categorias (TbHabilidades) do contexto
-  const { ferramentas, setFerramentas, habilidadesBase } = useCadastro();
+// 1. Tipagens definidas
+export interface Ferramenta {
+  id?: number;
+  idhabilidade: number;
+  idpessoa?: number;
+  nomeferramenta: string;
+}
 
+export interface HabilidadeBase {
+  id: number;
+  nome: string;
+}
+
+export default function FormHabilidades() {
+
+
+  // 2. Estados do componente
+  const [habilidadesBase, setHabilidadesBase] = useState<HabilidadeBase[]>([]);
+  const [ferramentas, setFerramentas] = useState<Ferramenta[]>([]);
+  const [ferramentaAtual, setFerramentaAtual] = useState<Ferramenta>({ idhabilidade: 0, nomeferramenta: '' });
   const [mostrandoForm, setMostrandoForm] = useState(false);
   const [indexEdicao, setIndexEdicao] = useState<number | null>(null);
-  const [ferramentaAtual, setFerramentaAtual] = useState<Ferramenta>({
-    idhabilidade: 0,
-    nomeferramenta: ''
-  });
+ 
+  // 3. Busca inicial na API
+  useEffect(() => { 
+    const buscarDados = async () => {
+try {
+        // 1. Busca as ferramentas que a pessoa já tem cadastradas
+        const resFerramentas = await fetch('/api/cadastro/ferramentas?idpessoa=1');
+        if (resFerramentas.ok) {
+          setFerramentas(await resFerramentas.json());
+        }
+
+        // 2. Busca TODAS as categorias do banco para preencher o <select>
+        const resHabilidades = await fetch('/api/cadastro/habilidades');
+        if (resHabilidades.ok) {
+          setHabilidadesBase(await resHabilidades.json());
+        }
+
+      } catch (error) {
+        console.error('Erro ao buscar os dados da API:', error);
+      }
+    };
+    
+    buscarDados();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFerramentaAtual((prev) => ({ 
       ...prev, 
-      // Se for o select de habilidade, converte para número, senão mantém texto
       [name]: name === 'idhabilidade' ? Number(value) : value 
     }));
   };
 
-  const abrirNova = () => {
-    setFerramentaAtual({ idhabilidade: 0, nomeferramenta: '' });
+  const abrirNova = (idhabilidadePreSelecionada: number = 0) => {
+    setFerramentaAtual({ idhabilidade: idhabilidadePreSelecionada, nomeferramenta: '' });
     setIndexEdicao(null);
-    setMostrandoForm(true);
-  };
-
-  const abrirEdicao = (index: number, ferramenta: Ferramenta) => {
-    setFerramentaAtual(ferramenta);
-    setIndexEdicao(index);
     setMostrandoForm(true);
   };
 
@@ -53,53 +81,153 @@ export default function FormHabilidades() {
     setMostrandoForm(false);
   };
 
-  const removerDaLista = (index: number) => {
-    if (confirm("Tem certeza que deseja remover esta ferramenta?")) {
-      const novas = ferramentas.filter((_, i) => i !== index);
-      setFerramentas(novas);
-    }
-  };
-
-  // Função auxiliar para achar o nome da categoria para exibir na lista
   const getNomeCategoria = (id: number) => {
     const hab = habilidadesBase?.find(h => h.id === id);
     return hab ? hab.nome : 'Categoria desconhecida';
   };
 
+  // Agrupa as ferramentas
+  const ferramentasAgrupadas = ferramentas?.reduce((acc, ferramenta, index) => {
+    const id = ferramenta.idhabilidade;
+    if (!acc[id]) {
+      acc[id] = [];
+    }
+    acc[id].push({ ...ferramenta, indexOriginal: index });
+    return acc;
+  }, {} as Record<number, Array<Ferramenta & { indexOriginal: number }>>);
+
   return (
     <div className="form-container">
+      {/* ESTE BOTÃO ADICIONAR GLOBAL AGORA É OPCIONAL, JÁ QUE TEMOS UM POR CATEGORIA */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
         <h3 className="form-title">Habilidades e Ferramentas</h3>
-        <button type="button" onClick={abrirNova} className="btn-action btn-add">
-          + Adicionar
+        <button type="button" onClick={() => abrirNova()} className="btn-action btn-add">
+          + Adicionar Categoria/Ferramenta
         </button>
       </div>
 
       {(!ferramentas || ferramentas.length === 0) && <p style={{ color: '#666' }}>Nenhuma ferramenta cadastrada.</p>}
 
-      {ferramentas?.map((ferramenta, index) => (
-        <div key={index} className="list-item-card list-item-grid">
-          
-          {/* COLUNA ESQUERDA - TEXTOS (75%) */}
-          <div>
-            <strong>{ferramenta.nomeferramenta}</strong><br/>
-            <small style={{ color: '#666' }}>
-              Categoria: {getNomeCategoria(ferramenta.idhabilidade)}
-            </small>
+      {/* Ferramentas Agrupadas por Habilidade */}
+      {ferramentasAgrupadas && Object.entries(ferramentasAgrupadas).map(([idString, listaDeFerramentas]) => {
+        const idHabilidade = Number(idString);
+        
+        return (
+          <div key={idHabilidade} className="list-item-card" style={{ 
+            border: '1px solid #ddd', 
+            borderRadius: '8px', 
+            marginBottom: '20px', 
+            padding: '15px',
+            backgroundColor: '#fff',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
+          }}>
+            
+            {/* CABEÇALHO DA HABILIDADE */}
+            <div style={{ 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+              alignItems: 'center', 
+              marginBottom: '15px', 
+              paddingBottom: '10px', 
+              borderBottom: '1px solid #eee' 
+            }}>
+              <h4 style={{ margin: 0, color: '#333', fontSize: '1.1rem' }}>
+                Habilidade: {getNomeCategoria(idHabilidade)}
+              </h4>
+              
+              <button style={{
+                backgroundColor: '#0056b3',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '4px',
+                padding: '4px 12px',
+                fontSize: '0.85rem',
+                cursor: 'pointer',
+                width: '80px',
+              }}>
+                editar
+              </button>
+            </div>
+            
+            {/* CORPO: TAGS + BOTÕES */}
+            <div style={{ 
+              display: 'flex',
+              justifyContent: 'min-content', 
+              alignItems: 'center', 
+              flexWrap: 'wrap', 
+              width: '300px',
+              gap: '15px'
+            }}>
+            
+              {/* LISTA DE FERRAMENTAS (TAGS) em linha */}
+              <div style={{ display: 'flex',  width: '700px', flexDirection: 'row', gap: '8px' }}>
+                {listaDeFerramentas.map((item) => (
+                  <span key={item.indexOriginal} style={{
+                    backgroundColor: '#f8f9fa',
+                    border: '1px solid #e0e0e0',
+                    borderRadius: '4px',
+                    padding: '6px 12px',
+                    fontSize: '0.9rem',
+                    fontWeight: '500',
+                    color: '#333',
+                    width: 'max-content',
+                  }}>
+                    {item.nomeferramenta}
+                  </span>
+                ))}
+              </div>
+
+              {/* BOTÕES DE AÇÃO DO GRUPO */}
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <button 
+                  type="button"
+                  style={{
+                    backgroundColor: '#007bff',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '4px',
+                    padding: '6px 14px',
+                    fontSize: '0.85rem',
+                    cursor: 'pointer'
+                  }}
+                >
+                  editar
+                </button>
+                <button 
+                  type="button"
+                  onClick={() => abrirNova(idHabilidade)} // Já abre o form com a categoria pré-selecionada!
+                  style={{
+                    backgroundColor: '#0056b3',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '4px',
+                    padding: '6px 14px',
+                    fontSize: '0.85rem',
+                    cursor: 'pointer'
+                  }}
+                >
+                  adicionar
+                </button>
+                <button 
+                  type="button"
+                  style={{
+                    backgroundColor: '#dc3545',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '4px',
+                    padding: '6px 14px',
+                    fontSize: '0.85rem',
+                    cursor: 'pointer'
+                  }}
+                >
+                  excluir
+                </button> 
+              </div>
+              
+            </div>
           </div>
-          
-          {/* COLUNA DIREITA - BOTÕES (25%) */}
-          <div className="list-item-buttons">
-            <button type="button" onClick={() => abrirEdicao(index, ferramenta)} className="btn-action btn-edit">
-              Editar
-            </button>
-            <button type="button" onClick={() => removerDaLista(index)} className="btn-action btn-delete">
-              Excluir
-            </button>
-          </div>
-          
-        </div>
-      ))}
+        );
+      })}
 
       {/* SUB-FORMULÁRIO DE CADASTRO/EDIÇÃO */}
       {mostrandoForm && (
