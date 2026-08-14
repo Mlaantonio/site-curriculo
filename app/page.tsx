@@ -212,6 +212,7 @@ useEffect(() => {
     <div>
       {/* Menu de Navegação Fixo com Menu Hambúrguer */}
       <header className="navbar-header">
+        <meta name="google-site-verification" content="r5xjv_doLv4jXucgsvkablSA0kLCQQcuJa-ZXksclY8" />
         <nav className="navbar-container">
           {/* Logo */}
           <a href='#' className="logo" onClick={closeMenu}>
