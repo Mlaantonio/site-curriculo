@@ -2,7 +2,6 @@
 "use client";
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { CadastroProvider, useCadastro } from './context/CadastroContext';
 import FormPrincipal from './components/FormPrincipal';
 import FormExperiencias from './components/FormExperiencias';
 import FormFormacao from './components/FormFormacao';
@@ -11,30 +10,22 @@ import FormHabilidades from './components/FormHabilidades';
 // Importa o arquivo CSS (ajuste o caminho se necessário)
 import './cadastro.css'; 
 
+// 1. Container que apenas renderiza os formulários independentes
 function ContainerCadastro() {
-  const { loading, mensagem, salvarDados } = useCadastro();
-
-  if (loading) return <div className="loading-text">Carregando dados do banco...</div>;
-
   return (
     <div className="page-container">
       <h2 className="page-title">Editar Cadastro Profissional</h2>
       
-      {mensagem && (
-        <div className="alert-success">
-          {mensagem}
-        </div>
-      )}
-
-      <form onSubmit={salvarDados} className="form-wrapper">
+      {/* 
+        Trocamos a tag <form> por uma <div> porque agora cada 
+        componente lidará com o seu próprio salvamento no banco.
+      */}
+      <div className="form-wrapper">
         <FormPrincipal />
         <FormExperiencias />
         <FormFormacao />
         <FormHabilidades />
-        <button type="submit" className="btn-primary btn-save">
-          Salvar Perfil Completo
-        </button>
-      </form>
+      </div>
     </div>
   );
 }
@@ -91,9 +82,7 @@ export default function EditarCadastro() {
     return (
       <div className="login-container">
         <form onSubmit={handleLogin} className="login-form">
-          
           <h3 className="login-title">Acesso Restrito</h3>
-          
           {erro && <p className="error-message">{erro}</p>}
           
           <input
@@ -101,22 +90,21 @@ export default function EditarCadastro() {
             placeholder="Digite a senha"
             value={senha}
             onChange={(e) => setSenha(e.target.value)}
-            className="form-input" /* Reaproveitando a classe de input do FormPrincipal! */
+            className="form-input"
             required
           />
           
           <button type="submit" disabled={loadingLogin} className="btn-primary">
             {loadingLogin ? 'Verificando...' : 'Entrar'}
           </button>
-
         </form>
       </div>
     );
   }
 
-  // Se estiver logado, exibe a página normal de cadastro com o Provider
+  // Se estiver logado, exibe a página normal de cadastro (sem o Provider antigo)
   return (
-    <CadastroProvider>
+    <>
       <div className="header-actions">
         <button 
           onClick={async () => { 
@@ -129,6 +117,6 @@ export default function EditarCadastro() {
         </button>
       </div>
       <ContainerCadastro />
-    </CadastroProvider>
+    </>
   );
 }

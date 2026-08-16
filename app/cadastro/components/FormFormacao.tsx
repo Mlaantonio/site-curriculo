@@ -1,58 +1,76 @@
 // app/cadastro/components/FormFormacao.tsx
 "use client";
 import * as React from 'react';
-import { useState } from 'react';
-import { useCadastro, Formacao } from '../context/CadastroContext';
+import { useState, useEffect } from 'react';
 import '../cadastro.css'; // Importando o CSS
 
-export default function FormFormacao() {
-  const { formacoes, setFormacoes } = useCadastro();
+  export interface Formacao {
+    id?: number;
+    idpessoa?: number;
+    instituicao: string;
+    curso: string;
+    status: 'CONCLUIDO' | 'CURSANDO' | 'INCOMPLETO';
+    datainicio: string; // Formato YYYY-MM-DD
+    datafim: string; // Formato YYYY-MM-DD
+  }
 
-  const [mostrandoFormFor, setMostrandoFormFor] = useState(false);
-  const [indexEdicao, setIndexEdicao] = useState<number | null>(null);
-  const [forAtual, setForAtual] = useState<Formacao>({
-    instituicao: '', curso: '', status: 'CONCLUIDO', datainicio: '', datafim: ''
-  });
+  export default function FormFormacao() {
+    const [formacoes, setFormacoes] = useState<Formacao[]>([]);
+    const [forAtual, setForAtual] = useState<Formacao>({ instituicao: '', curso: '', status: 'CONCLUIDO', datainicio: '', datafim: '' });
+    const [mostrandoFormFor, setMostrandoFormFor] = useState(false);
+    const [indexEdicao, setIndexEdicao] = useState<number | null>(null); 
 
-  const handleForChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setForAtual((prev) => ({ ...prev, [name]: value }));
-  };
+    useEffect(() => {
+      const buscarFormacoes = async () => {
+        try {
+          const res = await fetch('/api/cadastro/formacao');
+          if (res.ok) {
+            setFormacoes(await res.json());
+          } else {
+            console.error('Erro ao buscar formações:', res.statusText);
+          }
+        } catch (error) {
+          console.error('Erro ao buscar formações:', error);
+        }
+      };
 
-  const abrirNovaFor = () => {
-    setForAtual({ instituicao: '', curso: '', status: '', datainicio: '', datafim: '' });
-    setIndexEdicao(null);
-    setMostrandoFormFor(true);
-  };
+      buscarFormacoes();
+    }, []);
 
-  const abrirEdicaoFor = (index: number, formacao: Formacao) => {
-    setForAtual(formacao);
-    setIndexEdicao(index);
-    setMostrandoFormFor(true);
-  };
+    const handleForChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const { name, value } = e.target;
+      setForAtual((prev) => ({ ...prev, [name]: value }));
+    };
 
-  const salvarForNaLista = () => {
-    if (!forAtual.instituicao || !forAtual.curso) {
-      alert("Preencha ao menos Instituição e Curso!");
-      return;
-    }
+    const abrirNovaFor = () => {
+      setForAtual({ instituicao: '', curso: '', status: 'CONCLUIDO', datainicio: '', datafim: '' });
+      setIndexEdicao(null);
+      setMostrandoFormFor(true);
+    };
 
-    if (indexEdicao !== null) {
-      const novasFor = [...formacoes];
-      novasFor[indexEdicao] = forAtual;
-      setFormacoes(novasFor);
-    } else {
-      setFormacoes([...formacoes, forAtual]);
-    }
-    setMostrandoFormFor(false);
-  };
+    const abrirEdicaoFor = (index: number, formacao: Formacao) => {
+      setForAtual(formacao);
+      setIndexEdicao(index);
+      setMostrandoFormFor(true);
+    };
 
-  const removerForDaLista = (index: number) => {
-    if (confirm("Tem certeza que deseja remover esta formação?")) {
-      const novasFor = formacoes.filter((_, i) => i !== index);
-      setFormacoes(novasFor);
-    }
-  };
+    const salvarForNaLista = () => {
+      if (indexEdicao !== null) {
+        // Editando uma formação existente
+        const novasFormacoes = [...formacoes];
+        novasFormacoes[indexEdicao] = forAtual;
+        setFormacoes(novasFormacoes);
+      } else {
+        // Adicionando uma nova formação
+        setFormacoes([...formacoes, forAtual]);
+      }
+      setMostrandoFormFor(false);
+    };
+
+    const removerForDaLista = (index: number) => {
+      const novasFormacoes = formacoes.filter((_, i) => i !== index);
+      setFormacoes(novasFormacoes);
+    };
 
   return (
     <div className="form-container">
